@@ -1,0 +1,114 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">Registration Form</h2>
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="fname">First Name:</label>
+                        <input type="text" class="form-control" id="fname" name="fname" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name:</label>
+                        <input type="text" class="form-control" id="lname" name="lname" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <textarea class="form-control" id="address" name="address" rows="3" maxlength="100" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <select class="form-control" id="city" name="city" required>
+                            <option value="">Select City</option>
+                            <option value="New York">New York</option>
+                            <option value="Los Angeles">Los Angeles</option>
+                            <option value="Chicago">Chicago</option>
+                            <option value="Houston">Houston</option>
+                            <option value="Phoenix">Phoenix</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">Zip Code:</label>
+                        <input type="text" class="form-control" id="zip" name="zip" readonly>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#city').change(function(){
+                var city = $(this).val();
+                var zipCode;
+                switch(city){
+                    case 'New York':
+                        zipCode = '10001';
+                        break;
+                    case 'Los Angeles':
+                        zipCode = '90001';
+                        break;
+                    case 'Chicago':
+                        zipCode = '60601';
+                        break;
+                    case 'Houston':
+                        zipCode = '77001';
+                        break;
+                    case 'Phoenix':
+                        zipCode = '85001';
+                        break;
+                    default:
+                        zipCode = ' ';
+                }
+                $('#zip').val(zipCode);
+            });
+
+            $('#registrationForm').submit(function(event){
+                var fname = $('#fname').val();
+                var lname = $('#lname').val();
+                var email = $('email').val();
+                var address = $('#address').val();
+                var city = $('#city').val();
+                var zip = $('#zip').val();
+
+                var nameRegex = /^[a-zA-Z]{1,10}$/;
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if(!nameRegex.test(fname) || !nameRegex.test(lname)){
+                    alert('First name and last name must be letters only and max 10 characters each.');
+                    event.preventDefault();
+                    return;
+                }
+
+                if(!emailRegex.test(email)){
+                    alert('Invalid email address.');
+                    event.preventDefault();
+                    return;
+                }
+
+                if(address.length > 100){
+                    alert('Alert must be maximum 100 characters.');
+                    event.preventDefault();
+                    return;
+                }
+            })
+        })
+    </script>
+</body>
+</html>
